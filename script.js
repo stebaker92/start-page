@@ -30,18 +30,25 @@ $(document).ready(function() {
 
     //Tabs
 
-    $(".stripe").mouseenter(function() {
+    $(this).find(".content").stop().attr({
+        opacity: 0
+    });
+    $(".stripe").mouseenter(function(e,f) {
         $(this).stop().animate({
             width: '100vw'
         });
-        $(this).find(".content").stop().fadeIn().children().show();
+        $(this).find(".content").stop().animate({
+            opacity: 1
+        });
     });
 
     $(".stripe").mouseleave(function() {
         $(this).stop().animate({
             width: '40px'
         });
-        $(this).find(".content").stop().fadeOut();
+        $(this).find(".content").stop().animate({
+            opacity: 0
+        });
     });
 
 });

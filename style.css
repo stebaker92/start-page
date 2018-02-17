@@ -69,6 +69,9 @@ input[type=text]:focus {
     height: 25vh;
     color: white;
     z-index: 2;
+
+    overflow: hidden;
+    width: 40px;    
 }
 
 .stripe .title  {
@@ -99,13 +102,14 @@ input[type=text]:focus {
     font-weight: 300;
     display: flex;
     justify-content: space-between;
+
+    opacity: 0;
 }
 
 .stripe .content div {
     position: relative;
     height: 100%;
     width: 150px;
-    display: none;
 }
 
 .stripe .content div img {
@@ -117,7 +121,6 @@ input[type=text]:focus {
 }
 .stripe .content span {
     line-height: calc(25vh - 50px);
-    display: none;
 }
 
 .stripe .content span a {
