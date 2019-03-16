@@ -80,6 +80,8 @@ $(document).ready(function() {
         console.log("buildItem", item)
         buildItem(item);
     }
+    
+    $('a').attr("tabIndex", -1);
 
     //Search Bar
 
@@ -125,9 +127,9 @@ $(document).ready(function() {
         if (isEsc) {
             selectedItem = null;
 
-            $(`.stripe`).removeClass("open");
-
             var el = $(`.stripe`);
+
+            el.removeClass("open");
             
             el.stop().animate({
                 width: '40px'
@@ -141,7 +143,7 @@ $(document).ready(function() {
             return;
         }
 
-        if (!selectedItem && !data.find(x => x.key == child)){
+        if (!selectedItem && !data.find(x => x.key == child)) {
             return;
         }
 
@@ -149,56 +151,58 @@ $(document).ready(function() {
             var el = $(`.stripe:nth-of-type(${child})`);
 
             if (el.hasClass("open")) {
-                selectedItem = null;
-                el.removeClass("open");
 
-                el.stop().animate({
-                    width: '40px'
-                });
-                el.find(".content").stop().animate({
-                    opacity: 0
-                });
+                closeMenuItem(el);
+
             } else {
                 selectedItem = child;
-                el.addClass("open");
 
-                el.stop().animate({
-                    width: '100vw'
-                });
-                
-                el.find(".content").stop().animate({
-                    opacity: 1
-                });
+                openMenuItem(el);
             }
         } else {
             var el = $(`.stripe:nth-of-type(${selectedItem})`);
 
-            var selectedLink = el.find(`a`)[child - 1];
+            var selectedLink = el.find("a")[child - 1];
             if (selectedLink){
                 selectedLink.click();
                 $("body").addClass("loading");
                 $("body").append("<div class='spinner-container'><div class='lds-dual-ring'></div></div>");
             }
-
         }
     });
 
     $(".stripe").mouseenter(function(e,f) {
-        $(this).stop().animate({
-            width: '100vw'
-        });
-        $(this).find(".content").stop().animate({
-            opacity: 1
-        });
+        openMenuItem($(this));
     });
 
     $(".stripe").mouseleave(function() {
-        $(this).stop().animate({
+        closeMenuItem($(this));
+    });
+
+    function openMenuItem(el) {
+        
+        el.addClass("open");
+
+        el.stop().animate({
+            width: '100vw'
+        });
+
+        el.find(".content").stop().animate({
+            opacity: 1
+        });
+    }
+
+    function closeMenuItem(el) {
+        selectedItem = null;
+
+        el.removeClass("open");
+
+        el.stop().animate({
             width: '40px'
         });
-        $(this).find(".content").stop().animate({
+        el.find(".content").stop().animate({
             opacity: 0
         });
-    });
+    }
 
 });
