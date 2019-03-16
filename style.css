@@ -12,6 +12,11 @@ body {
     background-color: #f6f6f6;
 }
 
+body.loading {
+    opacity: 0.3;
+    background-color: #4a4444;
+}
+
 h2 {
     width: 100vw;
     position: absolute;
@@ -74,6 +79,8 @@ input[type=text]:focus {
     width: 40px;    
 }
 
+.open{}
+
 .stripe .title  {
     position: relative;
     width: 40px;
@@ -89,6 +96,7 @@ input[type=text]:focus {
     display: block;
     transform: translateX(-50%) translateY(-50%) rotate(-90deg);
     font-weight: 400;
+    white-space: pre;
 }
 
 .stripe .content {

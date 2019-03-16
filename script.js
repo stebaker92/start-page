@@ -1,4 +1,85 @@
+var selectedItem = null;
+
+var data = [
+    {
+        key: 1,
+        name:"reddit",
+        icon:"res/reddit.png",
+        color: "#383544",
+        links:[
+            link("/r/all", "http://www.reddit.com/r/all"),
+            link("/r/csharp", "http://www.reddit.com/r/csharp"),
+        ]
+    },
+    {
+        key: 2,
+        name:"Youtube",
+        icon:"res/youtube.png",
+        color: "#98474D",
+        links:[
+            link("Vsauce", "https://www.youtube.com/user/Vsauce"),
+        ]
+    },
+    {
+        key: 3,
+        name:"Misc",
+        color: "#6C7C82",
+        links:[
+            link("IMDB", "https://imdb.com/"),
+        ]
+    },
+    {
+        key: 4,
+        name:"Programming",
+        icon:"res/programming.png",
+        color: "#D65E4E",
+        links:[
+            link("The Rust Book", "https://doc.rust-lang.org/book/second-edition"),
+            link("StackOverflow", "https://www.stackoverflow.com"),
+            link("Game Programming", "http://www.gameprogrammingpatterns.com")
+        ]
+    },
+];
+
+function link(name, ref){
+    return {
+        name,
+        ref
+    };
+}
+
+function buildItem(i) {
+
+    var links = i.links.map((x, i) => `
+    <span class="item">
+    <a href="${x.ref}">${x.name}</a> [${i + 1}]
+    </span>
+    `).join("");
+
+    var icon = i.icon ? 
+        `<img src="${i.icon}"></img>` :
+        ``;
+
+    $("body").append(`
+    <div class="stripe" style="background-color:${i.color}">
+        <div class="title"><span>[${i.key}] ${i.name}</span></div>
+        <div class="content">
+            <div>${icon}</div>
+            ${links}
+        </div>
+    </div>
+    `);
+}
+
+
 $(document).ready(function() {
+
+    selectedItem = null;
+    
+    for (var item of data){
+        console.log("buildItem", item)
+        buildItem(item);
+    }
 
     //Search Bar
 
@@ -33,6 +114,71 @@ $(document).ready(function() {
     $(this).find(".content").stop().attr({
         opacity: 0
     });
+
+
+    $(document).keyup(function(e, f) {
+        console.log("keypress", e.which);
+
+        var child = e.which - 48;
+        var isEsc = e.which == 27;
+
+        if (isEsc) {
+            selectedItem = null;
+
+            $(`.stripe`).removeClass("open");
+
+            var el = $(`.stripe`);
+            
+            el.stop().animate({
+                width: '40px'
+            });
+            el.find(".content").stop().animate({
+                opacity: 0
+            });
+
+            return;
+        }
+
+        if (!selectedItem && !data.find(x => x.key == child)){
+            return;
+        }
+
+        if (!selectedItem) {
+            var el = $(`.stripe:nth-of-type(${child})`);
+
+            if (el.hasClass("open")) {
+                selectedItem = null;
+                el.removeClass("open");
+
+                el.stop().animate({
+                    width: '40px'
+                });
+                el.find(".content").stop().animate({
+                    opacity: 0
+                });
+            } else {
+                selectedItem = child;
+                el.addClass("open");
+
+                el.stop().animate({
+                    width: '100vw'
+                });
+                
+                el.find(".content").stop().animate({
+                    opacity: 1
+                });
+            }
+        } else {
+            var el = $(`.stripe:nth-of-type(${selectedItem})`);
+
+            var selectedLink = el.find(`a`)[child - 1];
+            if (selectedLink){
+                selectedLink.click();
+            }
+
+        }
+    });
+
     $(".stripe").mouseenter(function(e,f) {
         $(this).stop().animate({
             width: '100vw'

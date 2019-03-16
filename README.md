@@ -9,4 +9,4 @@ My starting page for my browser!
 
 The bars on the left expand!
 
-![Expaneded Screenshot]()
+![Expanded Screenshot]()
