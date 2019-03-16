@@ -52,7 +52,10 @@ function buildItem(i) {
 
     var links = i.links.map((x, i) => `
     <span class="item">
-    <a href="${x.ref}">${x.name}</a> [${i + 1}]
+    <a href="${x.ref}">
+        ${x.name}
+        <strong>[${i + 1}]</strong>
+    </a> 
     </span>
     `).join("");
 
@@ -62,7 +65,8 @@ function buildItem(i) {
 
     $("body").append(`
     <div class="stripe" style="background-color:${i.color}">
-        <div class="title"><span>[${i.key}] ${i.name}</span></div>
+        <div class="title">
+        <span><strong class="key">[${i.key}]</strong> ${i.name}</span></div>
         <div class="content">
             <div>${icon}</div>
             ${links}
@@ -137,14 +141,7 @@ $(document).ready(function() {
 
             var el = $(`.stripe`);
 
-            el.removeClass("open");
-            
-            el.stop().animate({
-                width: '40px'
-            });
-            el.find(".content").stop().animate({
-                opacity: 0
-            });
+            closeMenuItem(el);
 
             $("input").blur();
 
@@ -188,6 +185,7 @@ $(document).ready(function() {
     });
 
     function openMenuItem(el) {
+        $("body").addClass("has-selected");
         
         el.addClass("open");
 
@@ -202,6 +200,8 @@ $(document).ready(function() {
 
     function closeMenuItem(el) {
         selectedItem = null;
+
+        $("body").removeClass("has-selected");
 
         el.removeClass("open");
 

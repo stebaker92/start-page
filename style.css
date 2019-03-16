@@ -79,7 +79,13 @@ input[type=text]:focus {
     width: 40px;    
 }
 
-.open{}
+body.has-selected .key {
+    opacity: 0.2;
+}
+
+body.has-selected .open .key {
+    display: inline-block;
+}
 
 .stripe .title  {
     position: relative;
