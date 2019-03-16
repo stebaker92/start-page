@@ -136,6 +136,8 @@ $(document).ready(function() {
                 opacity: 0
             });
 
+            $("input").blur();
+
             return;
         }
 
@@ -174,6 +176,8 @@ $(document).ready(function() {
             var selectedLink = el.find(`a`)[child - 1];
             if (selectedLink){
                 selectedLink.click();
+                $("body").addClass("loading");
+                $("body").append("<div class='spinner-container'><div class='lds-dual-ring'></div></div>");
             }
 
         }
