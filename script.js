@@ -1,5 +1,7 @@
 var selectedItem = null;
 
+var name = "Steve";
+
 var data = [
     {
         key: 1,
@@ -85,6 +87,8 @@ $(window).on('pageshow', function() {
 });
 
 $(document).ready(function() {
+
+    $("h2").removeClass("hide").text(`Welcome ${name}...`);
 
     selectedItem = null;
     

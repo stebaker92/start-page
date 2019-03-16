@@ -24,6 +24,14 @@ h2 {
     text-align: center;
     font-weight: 300;
     font-size: 35px;
+    -webkit-transition: -webkit-transform 0.8s ease, opacity 3.1s ease-out;
+    -webkit-transition-delay: 0s,0.2s;
+}
+
+.hide {
+    transition: opacity .25s ease-in-out;
+    -webkit-transform: translateY(30px);
+    opacity: 0;
 }
 
 form {
