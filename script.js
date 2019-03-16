@@ -71,6 +71,14 @@ function buildItem(i) {
     `);
 }
 
+// User has pressed back
+$(window).on('pageshow', function() {
+    selectedItem = null;
+    $("body").removeClass("has-selected");
+    $("body").removeClass("loading");
+    $(".spinner-container").remove();
+    $("input").val("");
+});
 
 $(document).ready(function() {
 
